@@ -38,6 +38,7 @@ import {
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Papa from "papaparse";
+import { URL } from "../../config";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import PurchaseOrderDetailsDialog from "./PurchaseOrderDetailsDialog";
 import EditPurchaseOrderDialog from "./EditPurchaseOrderDialog";
@@ -117,10 +118,10 @@ const PurchaseOrders = () => {
           throw new Error("No authentication token found");
         }
         const [orgResponse, productResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/organization", {
+          axios.get("${URL}/api/organization", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/api/invproduct", {
+          axios.get("${URL}/api/invproduct", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -147,7 +148,7 @@ const PurchaseOrders = () => {
   const fetchPurchaseOrders = async (pageNum, limit = 25) => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/purchaseorder", {
+      const response = await axios.get("${URL}/api/purchaseorder", {
         params: { page: pageNum, limit },
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
@@ -168,7 +169,7 @@ const PurchaseOrders = () => {
   const searchPurchaseOrders = async (query, pageNum, limit = 25) => {
     setSearchLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/purchaseorder/search", {
+      const response = await axios.get("${URL}/api/purchaseorder/search", {
         params: { query, page: pageNum, limit },
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
@@ -214,13 +215,13 @@ const PurchaseOrders = () => {
       const poIdToFetch = po.po_id !== null ? po.po_id : po.id;
       const [detailsResponse, childOrdersResponse] = await Promise.all([
         axios.get(
-          `http://localhost:5000/api/purchaseorderdetail?po_id=${poIdToFetch}`,
+          `${URL}/api/purchaseorderdetail?po_id=${poIdToFetch}`,
           {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }
         ),
         axios.get(
-          `http://localhost:5000/api/purchaseorder/search`,
+          `${URL}/api/purchaseorder/search`,
           {
             params: { query: `po_id:${purchaseOrderId}`, page: 1, limit: 1000 },
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
@@ -297,7 +298,7 @@ const PurchaseOrders = () => {
     if (!poToDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/purchaseorder/${poToDelete}`, {
+      await axios.delete(`${URL}/api/purchaseorder/${poToDelete}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
       setPurchaseOrders(purchaseOrders.filter((po) => po.id !== poToDelete));
@@ -401,14 +402,14 @@ const PurchaseOrders = () => {
     const formatDate = (date) => (date ? new Date(date).toLocaleDateString() : "N/A");
 
     // Fetch all purchase orders with large limit
-    const poResponse = await axios.get("http://localhost:5000/api/purchaseorder", {
+    const poResponse = await axios.get("${URL}/api/purchaseorder", {
       params: { page: 1, limit: 1000 },
       headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
     });
     const exportPurchaseOrders = Array.isArray(poResponse.data.purchaseOrders) ? poResponse.data.purchaseOrders : [];
 
     // Fetch all purchase order details at once (no filter)
-    const detailsResponse = await axios.get("http://localhost:5000/api/purchaseorderdetail", {
+    const detailsResponse = await axios.get("${URL}/api/purchaseorderdetail", {
       headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
     });
     const allDetails = Array.isArray(detailsResponse.data) ? detailsResponse.data : [];
