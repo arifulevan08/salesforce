@@ -39,6 +39,7 @@ import {
 } from "@mui/icons-material";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { URL } from "../../config";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 
 const stringToColor = (string) => {
@@ -100,7 +101,7 @@ const Organizations = () => {
     const fetchOrganizations = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/api/organization", {
+        const response = await axios.get("${URL}/api/organization", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -210,7 +211,7 @@ const Organizations = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this organization?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/organization/${id}`, {
+        await axios.delete(`${URL}/api/organization/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -253,7 +254,7 @@ const Organizations = () => {
 
       if (isEdit && currentOrganization) {
         const response = await axios.put(
-          `http://localhost:5000/api/organization/${currentOrganization.id}`,
+          `${URL}/api/organization/${currentOrganization.id}`,
           payload,
           {
             headers: {
@@ -268,7 +269,7 @@ const Organizations = () => {
         );
       } else {
         const response = await axios.post(
-          "http://localhost:5000/api/organization",
+          "${URL}/api/organization",
           payload,
           {
             headers: {
