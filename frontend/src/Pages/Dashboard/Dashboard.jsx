@@ -16,6 +16,7 @@ import {
 } from "@mui/icons-material";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import axios from "axios";
+import { URL } from "../../config";
 
 const Dashboard = () => {
   const [totals, setTotals] = useState({
@@ -46,11 +47,11 @@ const Dashboard = () => {
           purchaseOrderDetailsRes,
           invProductsRes,
         ] = await Promise.all([
-          axios.get("http://localhost:5000/api/employee", { headers }),
-          axios.get("http://localhost:5000/api/organization", { headers }),
-          axios.get("http://localhost:5000/api/purchaseorder", { headers }),
-          axios.get("http://localhost:5000/api/purchaseorderdetail", { headers }),
-          axios.get("http://localhost:5000/api/invproduct", { headers }),
+          axios.get("${URL}/api/employee", { headers }),
+          axios.get("${URL}/api/organization", { headers }),
+          axios.get("${URL}/api/purchaseorder", { headers }),
+          axios.get("${URL}/api/purchaseorderdetail", { headers }),
+          axios.get("${URL}/api/invproduct", { headers }),
         ]);
 
         setTotals({
