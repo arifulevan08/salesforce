@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axios from "axios";
+import { URL } from "../../config";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Toast from "../../Components/Sidebar/Toast";
 
@@ -120,7 +121,7 @@ const CreatePurchaseOrder = () => {
 
       // Fetch all pages
       while (hasMore) {
-        const response = await axios.get("http://localhost:5000/api/purchaseorder", {
+        const response = await axios.get(`${URL}/api/purchaseorder`, {
           params: { page, limit: 25 },
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
@@ -162,7 +163,7 @@ const CreatePurchaseOrder = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/organization/search", {
+        const response = await axios.get(`${URL}/api/organization/search`, {
           params: { query: debouncedVendorSearch },
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
@@ -183,7 +184,7 @@ const CreatePurchaseOrder = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/organization/search", {
+        const response = await axios.get(`${URL}/api/organization/search`, {
           params: { query: debouncedStoreSearch },
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
@@ -206,7 +207,7 @@ const CreatePurchaseOrder = () => {
   //     }
 
   //     try {
-  //       const response = await axios.get("http://localhost:5000/api/invproduct/search", {
+  //       const response = await axios.get("${URL}/api/invproduct/search", {
   //         params: { query: searchTerm },
   //         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
   //       });
@@ -235,7 +236,7 @@ const CreatePurchaseOrder = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5000/api/invproduct/search", {
+      const response = await axios.get("${URL}/api/invproduct/search", {
         params: { query: searchTerm },
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
@@ -488,7 +489,7 @@ const CreatePurchaseOrder = () => {
       };
 
       const poResponse = await axios.post(
-        "http://localhost:5000/api/purchaseorder",
+        `${URL}/api/purchaseorder`,
         poPayload,
         { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
       );
@@ -498,7 +499,7 @@ const CreatePurchaseOrder = () => {
       // Create Purchase Order Details
       const itemPromises = updatedItems.map((item) =>
         axios.post(
-          "http://localhost:5000/api/purchaseorderdetail",
+          `${URL}/api/purchaseorderdetail`,
           {
             line_no: item.line_no || null,
             inv_product_id: parseInt(item.inv_product_id) || null,
