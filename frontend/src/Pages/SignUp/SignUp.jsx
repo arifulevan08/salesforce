@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { URL } from '../../config';
 import {
   TextField,
   Button,
@@ -40,7 +41,7 @@ const SignUp = () => {
     
     try {
       // Send POST request to backend with user sign-up data
-      const response = await axios.post('http://localhost:5000/api/signup', {
+      const response = await axios.post(`${URL}/api/signup`, {
         name: username,
         email,
         password,
