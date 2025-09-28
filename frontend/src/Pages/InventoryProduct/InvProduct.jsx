@@ -37,6 +37,7 @@ import {
   Inventory as InventoryIcon,
 } from "@mui/icons-material";
 import axios from "axios";
+import { URL } from "../../config";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 
 
@@ -79,7 +80,7 @@ const InvProducts = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/api/invproduct", {
+        const response = await axios.get("${URL}/api/invproduct", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -192,7 +193,7 @@ const InvProducts = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/invproduct/${id}`, {
+        await axios.delete(`${URL}/api/invproduct/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -235,7 +236,7 @@ const InvProducts = () => {
 
       if (isEdit && currentProduct) {
         const response = await axios.put(
-          `http://localhost:5000/api/invproduct/${currentProduct.id}`,
+          `${URL}/api/invproduct/${currentProduct.id}`,
           payload,
           {
             headers: {
@@ -250,7 +251,7 @@ const InvProducts = () => {
         );
       } else {
         const response = await axios.post(
-          "http://localhost:5000/api/invproduct",
+          "${URL}/api/invproduct",
           payload,
           {
             headers: {
