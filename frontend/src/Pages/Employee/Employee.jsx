@@ -40,6 +40,7 @@ import {
 } from "@mui/icons-material";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { URL } from "../../config";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 
 const stringToColor = (string) => {
@@ -103,7 +104,7 @@ const Employees = () => {
     const fetchEmployees = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/api/employee", {
+        const response = await axios.get("${URL}/api/employee", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -227,7 +228,7 @@ const Employees = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/employee/${id}`, {
+        await axios.delete(`${URL}/api/employee/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -274,7 +275,7 @@ const Employees = () => {
 
       if (isEdit && currentEmployee) {
         const response = await axios.put(
-          `http://localhost:5000/api/employee/${currentEmployee.id}`,
+          `${URL}/api/employee/${currentEmployee.id}`,
           payload,
           {
             headers: {
@@ -289,7 +290,7 @@ const Employees = () => {
         );
       } else {
         const response = await axios.post(
-          "http://localhost:5000/api/employee",
+          "${URL}/api/employee",
           payload,
           {
             headers: {
