@@ -38,6 +38,7 @@ import {
   Delete as DeleteIcon,
 } from "@mui/icons-material";
 import axios from "axios";
+import { URL } from "../../config";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 
 const stringToColor = (string) => {
@@ -86,13 +87,13 @@ const PurchaseOrderDetails = () => {
       setLoading(true);
       try {
         const [podResponse, poResponse, productResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/purchaseorderdetail", {
+          axios.get("${URL}/api/purchaseorderdetail", {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }),
-          axios.get("http://localhost:5000/api/purchaseorder", {
+          axios.get("${URL}/api/purchaseorder", {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }),
-          axios.get("http://localhost:5000/api/invproduct", {
+          axios.get("${URL}/api/invproduct", {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }),
         ]);
@@ -236,7 +237,7 @@ const PurchaseOrderDetails = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this purchase order detail?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/purchaseorderdetail/${id}`, {
+        await axios.delete(`${URL}/api/purchaseorderdetail/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -280,7 +281,7 @@ const PurchaseOrderDetails = () => {
 
       if (isEdit && currentDetail) {
         const response = await axios.put(
-          `http://localhost:5000/api/purchaseorderdetail/${currentDetail.id}`,
+          `${URL}/api/purchaseorderdetail/${currentDetail.id}`,
           payload,
           {
             headers: {
@@ -295,7 +296,7 @@ const PurchaseOrderDetails = () => {
         );
       } else {
         const response = await axios.post(
-          "http://localhost:5000/api/purchaseorderdetail",
+          "${URL}/api/purchaseorderdetail",
           payload,
           {
             headers: {
