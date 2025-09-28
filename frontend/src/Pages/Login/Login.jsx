@@ -26,6 +26,7 @@ import {
   //   Apple
 } from "@mui/icons-material";
 import axios from "axios";
+import { URL } from "../../config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +44,7 @@ const Login = () => {
 
     try {
       // Send login request to backend
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await axios.post(`${URL}/api/login`, {
         email,
         password,
       });
