@@ -77,7 +77,7 @@
 //           setUser(decodedToken);
 
 //           // Fetch user data from the backend
-//           const response = await axios.get("http://localhost:5000/api/user", {
+//           const response = await axios.get("${URL}/api/user", {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
 //             },
@@ -688,7 +688,7 @@
 //           setUser(decodedToken);
 
 //           // Fetch user data from the backend
-//           const response = await axios.get("http://localhost:5000/api/user", {
+//           const response = await axios.get("${URL}/api/user", {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
 //             },
@@ -1265,6 +1265,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { URL } from "../../config";
 
 const Sidebar = ({ children }) => {
   const navigate = useNavigate();
@@ -1308,7 +1309,7 @@ const Sidebar = ({ children }) => {
           setUser(decodedToken);
 
           // Fetch user data from the backend
-          const response = await axios.get("http://localhost:5000/api/user", {
+          const response = await axios.get("${URL}/api/user", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
