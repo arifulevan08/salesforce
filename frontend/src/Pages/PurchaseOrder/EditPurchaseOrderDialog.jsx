@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axios from "axios";
+import { URL } from "../../config";
 
 // === NEW: Added useDebounce hook to debounce search inputs ===
 const useDebounce = (value, delay) => {
@@ -135,7 +136,7 @@ const EditPurchaseOrderDialog = ({
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/organization/search", {
+        const response = await axios.get("${URL}/api/organization/search", {
           params: { query: debouncedVendorSearch },
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
@@ -158,7 +159,7 @@ const EditPurchaseOrderDialog = ({
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/organization/search", {
+        const response = await axios.get("${URL}/api/organization/search", {
           params: { query: debouncedStoreSearch },
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
@@ -368,7 +369,7 @@ const EditPurchaseOrderDialog = ({
       const detail = detailsForm[index];
       if (detail.id && !detail.isNew) {
         try {
-          await axios.delete(`http://localhost:5000/api/purchaseorderdetail/${detail.id}`, {
+          await axios.delete(`${URL}/api/purchaseorderdetail/${detail.id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           });
           await fetchPoDetails(selectedPoId);
@@ -442,7 +443,7 @@ const EditPurchaseOrderDialog = ({
 
       // Update Purchase Order
       const poResponse = await axios.put(
-        `http://localhost:5000/api/purchaseorder/${selectedPoId}`,
+        `${URL}/api/purchaseorder/${selectedPoId}`,
         poPayload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -475,7 +476,7 @@ const EditPurchaseOrderDialog = ({
           if (detail.isNew) {
             // Create new detail
             const response = await axios.post(
-              `http://localhost:5000/api/purchaseorderdetail`,
+              `${URL}/api/purchaseorderdetail`,
               detailData,
               { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -483,7 +484,7 @@ const EditPurchaseOrderDialog = ({
           } else if (detail.id && detail.isModified) {
             // Update existing detail
             const response = await axios.put(
-              `http://localhost:5000/api/purchaseorderdetail/${detail.id}`,
+              `${URL}/api/purchaseorderdetail/${detail.id}`,
               detailData,
               { headers: { Authorization: `Bearer ${token}` } }
             );
